@@ -15,10 +15,9 @@ df = met.csvleri_birlestir(klasor_yolu="SaatlikVeriler")
 tekHesap = TeknikGostergeHesaplayici(df=df,timeframe="1h")
 df = tekHesap.tumunu_hesapla()
 print(df.columns)
-# print(df.head(30))
+ 
 df=df.dropna()
-# print("------------------------------------------")
-# print(df.head(30))
+ 
 # Girdi sütunları
 features = [
     "open",

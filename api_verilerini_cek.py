@@ -3,7 +3,7 @@ import time
 import datetime
 import requests
 import pandas as pd
-
+ 
 class ApiVerileriEdin:
     def __init__(self, service=None):
         self.service = service
@@ -104,11 +104,6 @@ class ApiVerileriEdin:
             else:
                 with open("istek_log.txt", "a", encoding="utf-8") as log_file:
                     log_file.write(f"Tarih: {gun_baslangic.date()} | Start: {start_ts} | End: {end_ts}\n")
-
-
-
-
-
 
 ApiVerileriEdin().saatlik_verileri_cek_ve_kaydet(baslangic_tarihi="2018-01-06",bitis_tarihi="2025-11-21")
 

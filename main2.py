@@ -11,9 +11,7 @@ import joblib
 from methotlar import Methodlar
 from TeknikGostergeHesaplayici import TeknikGostergeHesaplayici
 
-# -----------------------------
 # 1. Veri Hazırlama
-# -----------------------------
 met = Methodlar()
 df = met.csvleri_birlestir(klasor_yolu="SaatlikVeriler")
 tekHesap = TeknikGostergeHesaplayici(df=df, timeframe="1h")
@@ -41,9 +39,8 @@ data_scaled = scaler_all.fit_transform(data)
 scaler_return = MinMaxScaler()
 return_scaled = scaler_return.fit_transform(df[["return"]].values)
 
-# -----------------------------
+
 # 2. X ve y oluşturma
-# -----------------------------
 window_size = 30  # daha uzun pencere
 X, y = [], []
 for i in range(window_size, len(data_scaled)):
@@ -54,16 +51,13 @@ X, y = np.array(X), np.array(y)
 print(f"x uzunluk = {len(X)}")
 print(f"y uzunluk = {len(y)}")
 
-# -----------------------------
 # 3. Eğitim/Test ayrımı
-# -----------------------------
 train_size = int(len(X) * 0.8)
 X_train, X_test = X[:train_size], X[train_size:]
 y_train, y_test = y[:train_size], y[train_size:]
 
-# -----------------------------
+
 # 4. Model oluşturma
-# -----------------------------
 model = Sequential()
 model.add(LSTM(64, return_sequences=True, input_shape=(X.shape[1], X.shape[2])))
 model.add(Dropout(0.2))
@@ -77,7 +71,6 @@ es = EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True)
 
  
 # 5. Model eğitimi
- 
 history = model.fit(
     X_train, y_train,
     epochs=200,
@@ -89,7 +82,6 @@ history = model.fit(
 
  
 # 6. Tahmin
- 
 y_pred = model.predict(X_test)
 
 # inverse transform
@@ -130,7 +122,6 @@ plt.show()
 
  
 # 9. Hata metrikleri
- 
 mae = mean_absolute_error(real_prices, pred_prices)
 mape = mean_absolute_percentage_error(real_prices, pred_prices) * 100
 rmse = np.sqrt(mean_squared_error(real_prices, pred_prices))
